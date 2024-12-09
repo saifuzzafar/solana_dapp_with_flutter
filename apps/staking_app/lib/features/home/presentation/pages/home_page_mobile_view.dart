@@ -13,6 +13,13 @@ class HomePageMobileView extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
+          const Text(
+            "Solana Staking App",
+            style: TextStyle(fontSize: 34, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 35,
+          ),
           Text(
             "PDA Accounts: $pdaAccount",
             style: const TextStyle(fontSize: 24),
