@@ -36,7 +36,7 @@ class HomeCubit extends Cubit<HomeCubitState> {
         lamPorts.add(account.account.lamports.toString());
       }
       emit(HomeLoadedState(
-          lamPorts: lamPorts.toString(), pdaAccount: pdaAccount.toString()));
+          lamPorts: lamPorts.toString(), pdaAccount: pdaAccount));
     } catch (e) {
       print("Error fetching program accounts: $e");
     }

@@ -12,7 +12,7 @@ class HomeInitialState extends HomeCubitState {}
 
 class HomeLoadedState extends HomeCubitState {
   final String lamPorts;
-  final String pdaAccount;
+  final List<String> pdaAccount;
 
   const HomeLoadedState({required this.lamPorts, required this.pdaAccount});
 }
