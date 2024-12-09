@@ -1,5 +1,7 @@
 # PQ Staking Program Documentation
 
+<img src="./apps/staking_app/screenshots/mobile_view.png" alt="PQ Staking Program" width="350" height="800">
+
 ## Introduction
 This program implements a staking system using the Solana blockchain. It allows users to stake tokens and claim rewards based on the staking duration and selected tiers. The program includes functionality for creating and updating a staking vault, staking tokens, claiming rewards, and unstaking tokens.
 
