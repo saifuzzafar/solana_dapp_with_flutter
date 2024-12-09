@@ -1,6 +1,6 @@
 # Flutter Template
 
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/saifuzzafar/flutter_template_v1) [![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/saifuzzafar/flutter_template_v1)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/saifuzzafar/solana_dapp_with_flutter) [![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/saifuzzafar/solana_dapp_with_flutter)
 
 ## Table Of Content
 
@@ -58,13 +58,13 @@ Here are the steps for setting up a Project with this Flutter-Works Template:
 In this step you need to download(cloning) the files from this repository to your local computer:
 
 ``` bash
-git clone https://github.com/saifuzzafar/flutter_template_v1.git
+git clone https://github.com/saifuzzafar/solana_dapp_with_flutter.git
 ```
 
 Or
 
 ``` bash
-git clone git@github.com/saifuzzafar/flutter_template_v1.git
+git clone git@github.com/saifuzzafar/solana_dapp_with_flutter.git
 ```
 
 **Step 2:**
@@ -100,9 +100,9 @@ melos run generate_files
 
 By default package/project names:
 
-`flutter_template_v1`
+`solana_dapp_with_flutter`
 
-To change the package name, simply search for all `flutter_template_v1`, then replace it with
+To change the package name, simply search for all `solana_dapp_with_flutter`, then replace it with
 the new package name.
 
 ## Create App
@@ -126,8 +126,8 @@ By leveraging the mono repo architecture, developers can efficiently manage depe
 The architecture is separated into the following layers
 
 - [`apps`](apps/): It conatian all the apps.
-    - [`movie_app`](apps/movie_app) : The movie app.
-        - [`domain`](apps/movie_app/domain): Use cases for individual pieces of work.
+    - [`staking_app`](apps/staking_app) : The movie app.
+        - [`domain`](apps/staking_app/domain): Use cases for individual pieces of work.
         - [`data`](apps/movie_ap/data): Repositories to manage various data sources.
         - [`presentation`](apps/movie_ap/presentation): UI for mobile, tab and web it also containt he statemangment techniques(i.e cubit).
 - [`pacakges`](packages/): It conatian the custom packages which will be used by all apps.
@@ -144,9 +144,9 @@ the scripts used in the project.
 The template comes with built-in support for 3 flavors. Each flavor uses a different `main.dart`
 file.
 
-- Dev - [`main_dev.dart`](apps/movie_app/lib/main/main_dev.dart)
-- QA - [`main_qa.dart`](apps/movie_app/lib/main/main_qa.dart)
-- Prod - [`main_prod.dart`](apps/movie_app/lib/main/main_prod.dart)
+- Dev - [`main_dev.dart`](apps/staking_app/lib/main/main_dev.dart)
+- QA - [`main_qa.dart`](apps/staking_app/lib/main/main_qa.dart)
+- Prod - [`main_prod.dart`](apps/staking_app/lib/main/main_prod.dart)
 
 You can setup any environment specific values in the respective `main.dart` files.
 
@@ -246,7 +246,7 @@ automatically, here is a list of available modules:
 ## Upcoming Improvements
 
 Checklist of all
-upcoming [enhancements](https://github.com/saifuzzafar/flutter_template_v1/issues)
+upcoming [enhancements](https://github.com/saifuzzafar/solana_dapp_with_flutter/issues)
 .
 
 ## Contributing to this Project
