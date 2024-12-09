@@ -1,4 +1,4 @@
-# PQ Staking Program Documentation
+# Solana Dapp With Flutter
 
 <img src="./apps/staking_app/screenshots/mobile_view.png" alt="PQ Staking Program" width="350" height="800">
 
