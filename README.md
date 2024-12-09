@@ -1,255 +1,158 @@
-# Flutter Template
+# PQ Staking Program Documentation
 
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/saifuzzafar/solana_dapp_with_flutter) [![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/saifuzzafar/solana_dapp_with_flutter)
+## Introduction
+This program implements a staking system using the Solana blockchain. It allows users to stake tokens and claim rewards based on the staking duration and selected tiers. The program includes functionality for creating and updating a staking vault, staking tokens, claiming rewards, and unstaking tokens.
 
-## Table Of Content
+---
 
-- [Overview](#overview)
-- [Getting Started](#getting-started)
-    * [Requirements](#requirements)
-    * [Setup](#setup)
-- [Change Package Name](#change-package-name)
-- [Create App](#create-app)
-- [Architecture](#architecture)
-    * [Mono Repo Architecture Extension](#mono-repo-architecture-extension)
-    * [Layers](#layers)
-- [Running/Debugger](#flavors)
-    - [Flavors](#flavors)
-- [Accelerate Development Process](#accelerate-development-process)
-- [Features](#features)
-- [Modules](#modules)
-    * [List Default Modules](#list-default-modules)
--[Ongoing Enhancements](#ongoing-enhancements)
+## Table of Contents
+1. [Program ID](#program-id)  
+2. [Constants](#constants)  
+3. [Accounts](#accounts)  
+4. [Instructions](#instructions)  
+   - [create_stake_vault](#1-create_stake_vault)  
+   - [update_stake_vault](#2-update_stake_vault)  
+   - [stake_token](#3-stake_token)  
+   - [claim_token](#4-claim_token)  
+   - [unstake_token](#5-unstake_token)  
+5. [Errors](#errors)
 
-## Overview
+---
 
-[Flutter](https://flutter.io/) is Google's UI toolkit for building beautiful, natively compiled
-applications for mobile, web, desktop, and embedded devices from a single codebase.
+## Program ID
+The program is identified by a unique Program ID on Solana, which is:  
 
-This is a micro-framework for Flutter which is designed to help simplify developing apps. Every
-project provides a simple Template to help you build apps easier.
 
-This project is open source, we welcome any contributions.
+declare_id!("EVMg71B51FabXrJCNWSM4vLjAV5fwVzPzPrqG2hXEZYy");
 
-## Getting Started
+This ID is used to interact with the program on the Solana blockchain.
 
-#### Requirements
+---
 
-Here are some things you need to prepare before this Template setup:
+## Constants
 
-1. Flutter SDK Stable (Latest Version) [Install](https://flutter.dev/docs/get-started/install)
-2. Android Studio [Install](https://developer.android.com/studio)
-3. Visual Studio Code (Optional) [Install](https://code.visualstudio.com/)
-4. **Dart** and **Flutter** extensions:
-    - **Intellij Platform** users ([Dart](https://plugins.jetbrains.com/plugin/6351-dart)
-      , [Flutter](https://plugins.jetbrains.com/plugin/9212-flutter) )
-    - **Visual Studio Code**
-      users ([Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)
-      , [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) )
+### Stake Vault PDA Seed  
+The `STAKE_PDA_SEED` is a unique identifier used to derive the program-derived address (PDA) for the staking vault. This ensures that the same address is used every time.
 
-#### Setup
+---
 
-To set up your project based on this Template, you need to do some of the steps you need to do.
+## Accounts
 
-Here are the steps for setting up a Project with this Flutter-Works Template:
+### VaultAccount
+- Stores information about the staking vault, such as the total tokens available for rewards, the minimum and maximum staking amounts, and the status of staking (paused or active).
 
-**Step 1:**
+### StakeAccount
+- Stores individual user stake information, such as the amount of tokens staked, the timestamp of when staking started, and the staking tier.
 
-In this step you need to download(cloning) the files from this repository to your local computer:
+### Token Accounts
+- Includes token-related accounts, such as the user's token account (to send tokens from) and the vault's token account (to receive tokens).
 
-``` bash
-git clone https://github.com/saifuzzafar/solana_dapp_with_flutter.git
-```
+### Signer
+- The user who interacts with the program and signs the transactions.
 
-Or
+---
 
-``` bash
-git clone git@github.com/saifuzzafar/solana_dapp_with_flutter.git
-```
+## Instructions
 
-**Step 2:**
+### 1. create_stake_vault
+**Purpose:**  
+Initializes the staking vault. Callable only by the admin of the program.
 
-The next step is to open the folder that has been downloaded / cloned into a cli application such
-as `bash`, `cmd`, `terminal` .
+**Parameters:**  
+- `_bump`: PDA bump seed.  
+- `total_token_amount`: Total token amount available for rewards.  
+- `min_token`: Minimum amount of tokens required to stake.  
+- `max_token`: Maximum amount of tokens allowed to stake.  
+- `pause_staking`: A boolean flag to pause/unpause staking.
 
-After cloning the repo and follow these steps to setup the project.
+**Workflow:**  
+1. Verifies admin privileges.  
+2. Initializes vault variables like the total amount, min/max staking limits, and staking status.
 
-As we have mono repo clean architure each app's are sepated and each packages are separated. The template
-uses [`melos`](https://melos.invertase.dev/) to manage all package and performing actions like
-linting and running tests accross all packages. You can setup `melos`
-from [here](https://melos.invertase.dev/getting-started).
+---
 
-Melos can be installed as a global package,
+### 2. update_stake_vault
+**Purpose:**  
+Allows the admin to modify the staking vault's parameters, including token amounts and the pause flag.
 
-``` bash
-dart pub global activate melos
-```
+**Parameters:**  
+- `_bump`: PDA bump seed.  
+- `total_token_amount`: Updated total token amount.  
+- `min_token`: Updated minimum staking amount.  
+- `max_token`: Updated maximum staking amount.  
+- `pause_staking`: Flag to pause or unpause staking.
 
-#### Get Dependencies
+**Workflow:**  
+1. Verifies admin privileges.  
+2. Updates the vault’s token amount, min/max staking amounts, and pause status.
 
-```bash
-melos run pub_get
-```
+---
 
-#### Run Code Generation
+### 3. stake_token
+**Purpose:**  
+Allows users to stake their tokens.
 
-```bash
-melos run generate_files
-```
-## Change Package Name
+**Parameters:**  
+- `_bump`: PDA bump seed.  
+- `amount`: Amount of tokens to stake.  
+- `stake_tier`: Selected staking tier (e.g., 30, 90, 180 days).
 
-By default package/project names:
+**Workflow:**  
+1. Checks if staking is paused.  
+2. Validates staking amount against min/max limits.  
+3. Transfers tokens to the vault.  
+4. Records staking details in the user's StakeAccount.
 
-`solana_dapp_with_flutter`
+---
 
-To change the package name, simply search for all `solana_dapp_with_flutter`, then replace it with
-the new package name.
+### 4. claim_token
+**Purpose:**  
+Allows users to claim staking rewards.
 
-## Create App
-As this is mono repo project you can create multiple apps inside apps folder.
-for example: `flutter create your_app_name`
+**Workflow:**  
+1. Checks for an active stake.  
+2. Calculates rewards based on staking tier and duration.  
+3. Transfers rewards from the vault to the user's account.  
+4. Updates StakeAccount with the new timestamp.
 
-## Architecture
+---
 
-The architecture of the template facilitates separation of concerns and avoids tight coupling
-between it's various layers. The goal is to have the ability to make changes to individual app's and packages
-without affecting the other app. This architecture is an adaptation of concepts
-from [`The Clean Architecture`](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+### 5. unstake_token
+**Purpose:**  
+Allows users to unstake tokens and withdraw them, along with earned rewards.
 
-### Mono Repo Architecture Extension
-In addition to the Clean Architecture principles, this project extends its architecture to embrace the mono repo architecture paradigm. This extension enables the development of multiple apps within a single project, fostering modularity, scalability, and ease of management.
+**Workflow:**  
+1. Verifies an active stake.  
+2. Ensures the lockup period has passed.  
+3. Calculates the reward.  
+4. Transfers staked amount and rewards to the user's account.  
+5. Marks the stake as inactive.
 
-By leveraging the mono repo architecture, developers can efficiently manage dependencies, share code between projects, and ensure consistency across different applications developed within the same repository.
+---
 
-### Layers
+## Errors
 
-The architecture is separated into the following layers
+### InvalidSuperOwner
+Occurs when a non-admin attempts admin-only operations.
 
-- [`apps`](apps/): It conatian all the apps.
-    - [`staking_app`](apps/staking_app) : The movie app.
-        - [`domain`](apps/staking_app/domain): Use cases for individual pieces of work.
-        - [`data`](apps/movie_ap/data): Repositories to manage various data sources.
-        - [`presentation`](apps/movie_ap/presentation): UI for mobile, tab and web it also containt he statemangment techniques(i.e cubit).
-- [`pacakges`](packages/): It conatian the custom packages which will be used by all apps.
-    - [`core`](packages/core): Core business implementation.
-    - [`core_flutter`](packages/core_flutter): Core UI reusuable Components.
+### PauseStaking
+Returned if staking is paused.
 
-Each app has a `di` directory to manage Dependency Injection for that layer.
+### AlreadyStaked
+Occurs when a user tries to stake while already having an active stake.
 
-Read the [dependency management documentation](dependency-injection/README.md) to learn about all
-the scripts used in the project.
+### InvalidMinAmount
+Triggered if the staking amount is less than the minimum limit.
 
-## Flavors
+### InvalidMaxAmount
+Triggered if the staking amount exceeds the maximum limit.
 
-The template comes with built-in support for 3 flavors. Each flavor uses a different `main.dart`
-file.
+### AlreadyUnStaked
+Occurs if the user attempts to claim or unstake when they have already unstaked.
 
-- Dev - [`main_dev.dart`](apps/staking_app/lib/main/main_dev.dart)
-- QA - [`main_qa.dart`](apps/staking_app/lib/main/main_qa.dart)
-- Prod - [`main_prod.dart`](apps/staking_app/lib/main/main_prod.dart)
+---
 
-You can setup any environment specific values in the respective `main.dart` files.
+## Example Flutter Template
+For integrating with this program, following Flutter template is used as a base:  
+[Flutter Solana Wallet Integration Template]([https://github.com/solana-dev/solana-flutter-template](https://github.com/saifuzzafar/flutter_template_v1)
 
-To run a specific flavor you need to specify the flavor and target file.
-
-```bash
- flutter run --flavor qa -t lib/entrypoints/main_qa.dart
-```
-
-**To avoid specifying all the flags every time, use the [`run.sh`](app/scripts/README.md#run)
-script**
-
-Read the [scripts documentation](app/scripts/README.md) to learn about all the scripts used in the
-project.
-
-## Accelerate Development Process
-### 1. Module Generator:
-As you know, the clean architecture of separation of concern means we need to create multiple layers with folders and files in them. So to speed up this process, we have a script called generate_modules. This script will generate all 3 layers (presentation, domain, and data) with the necessary folder and file. Dart files will also contain the starter class. Developers can save a lot of time by generating modules from the script, and they can focus on developing the business logic.
-### 2. Code Generator:
-Another good way to save time is to use the retrofit generator, which generates the API call methods for you. JSON serializable generates the entity classes for you to parse the API response. You can also generate the API request JSON parameters. 
-### 3. Assets Generator:
-In this template we are using [flutter_gen](https://pub.dev/packages/flutter_gen) to genrate the png, svg and fonts.
-By doing this developers dont need to main the the separate file for image and fonts urls.
-
-## Hide Generated Files (Optional)
-
-In-order to hide generated files, navigate to `Android Studio` -> `Preferences` -> `Editor`
--> `File Types` and paste the below lines under `ignore files and folders` section:
-
-```dart
-*.config.dart;*.g.dart;
-```
-
-In Visual Studio Code, navigate to `Preferences` -> `Settings` and search for `Files:Exclude`. Add
-the following patterns:
-
-```dart
-
-**/
-
-*
-* /*.g.dart
-```
-
-## Features
-
-- Clean Architecture
-- Adhering to SOLID Principles
-- Repository Pattern for code separations
-- Dependency Injection
-- Network Layer
-- Data Layer
-- Automatic Error Handling
-- Built-in support for 3 [`flavors`](https://docs.flutter.dev/deployment/flavors) - `dev`, `qa`
-  and `prod`.
-- Unit & Integration Tests
-- [Localisation](./localisation/)
-- Routing/Navigations
-- [Responsive Framework](./wiki/responsive-framework/RESPONSIVE_FRAMEWORK.md)
-- Pre-commit Checks
-    - Dart Analysis
-    - [`Flutter Lints`](https://pub.dev/packages/flutter_lints) for linting.
-    - [Dart Fix](https://github.com/dart-lang/sdk/blob/main/pkg/dartdev/doc/dart-fix.md)
-    - Flutter Format
-
-## Libraries & Tools Used
-
-- Network - [Retrofit](https://pub.dev/packages/retrofit)
-- Database - [Hive](https://pub.dev/packages/hive)
-- Navigation - [Auto Router](https://pub.dev/packages/auto_route)
-- Localisation - [Flutter Intl](https://www.jetbrains.com/help/idea/managing-plugins.html)
-- Responsivness [Responsive Farmework](https://pub.dev/packages/responsive_framework)
-
-## Modules
-
-## List of Default Modules
-
-By default when you use this Template, there are several modules that are installed
-automatically, here is a list of available modules:
-
-| Name                                                   | Description                                                  |
-| ------------------------------------------------------ | ------------------------------------------------------------ |
-| [app](./app)                                           | A module containing apps |
-| [core](./core)                                         | A module containing core business implementation of the product |
-| [storage_util](./dependency-injection)                 | A module that contains Hive and secure storage as storage option |
-| [localisation](./localisation)                         | A module containing translation data          |
-
-## Ongoing Enhancements
-- Error/exception handling.
-- Fastlan(android,ios).
-- Updation of responsiveness.
-- Localisation improvement.
-- Model class segregation.
-- Code generator to save time.
-
-  
-## Upcoming Improvements
-
-Checklist of all
-upcoming [enhancements](https://github.com/saifuzzafar/solana_dapp_with_flutter/issues)
-.
-
-## Contributing to this Project
-
-Contributions are welcome from anyone and everyone. We encourage you to review
-the [Guiding principles for contributing](CONTRIBUTING.md)
