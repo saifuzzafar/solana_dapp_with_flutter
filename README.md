@@ -2,6 +2,14 @@
 
 <img src="./apps/staking_app/screenshots/mobile_view.png" alt="PQ Staking Program" width="350" height="800">
 
+## Overview
+
+This project combines Rust-based smart contracts deployed on the Solana blockchain with a Flutter-based frontend application. The Rust program handles the staking logic, and the Flutter app interacts with it to fetch and manage data. Key functionalities include:
+
+- **Smart Contract Deployment**: The staking program is written in Rust and deployed on the Solana blockchain.
+- **Fetching PDA (Program Derived Address)**: The Flutter app retrieves the PDA associated with the staking vault, ensuring consistency in account management.
+- **Retrieving Lamports**: The app fetches the balance (in lamports) from the blockchain, enabling users to view and manage their staked tokens seamlessly.
+
 ## Introduction
 This program implements a staking system using the Solana blockchain. It allows users to stake tokens and claim rewards based on the staking duration and selected tiers. The program includes functionality for creating and updating a staking vault, staking tokens, claiming rewards, and unstaking tokens.
 
