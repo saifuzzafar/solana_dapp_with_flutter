@@ -152,6 +152,13 @@ Triggered if the staking amount exceeds the maximum limit.
 ### AlreadyUnStaked
 Occurs if the user attempts to claim or unstake when they have already unstaked.
 
+
+## Future Scope
+
+1. Implement login with Phantom Wallet across all platforms: iOS, Android, and Web.
+2. Anchor instructions to communicate with solana blockchain.
+3. Expand staking features to include additional functionality and user benefits.
+
 ---
 
 ## Example Flutter Template
